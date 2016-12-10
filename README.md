@@ -1,6 +1,6 @@
 # Getting Start
 
-这里是sletjs结合模板引擎来渲染view的示例
+这里是sletjs上传的示例
 
 ## 安装slet模块
 
