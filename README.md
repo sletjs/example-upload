@@ -6,8 +6,7 @@
 
 ```
 $ npm i -S slet
-$ npm i -S slet-viewcontroller
-$ npm i -S nunjucks
+$ npm i -S slet-uploadcontroller
 ```
 
 ## 从app.js开始
@@ -18,63 +17,47 @@ $ npm i -S nunjucks
 const Slet = require('slet');
 const app = new Slet({
     root: __dirname,
-    debug: true
+    debug: true,
+    upload: { dest: './uploads/'}
 });
 
-app.defineController(require('slet-viewcontroller'))
+app.defineController(require('slet-uploadcontroller'))
 
-app.router('/', require('./viewctrl') )  
+app.router('/', require('./uploadctrl') )  
 
 app.start(3000) 
 ```
 
-如果想定制，可以通过配置项来实现，这里采用系统默认的nunjucks作为模板引擎
-
-```
-const app = new Slet({
-    root: __dirname,
-    debug: true,
-    "views" :{
-        "path" : ".",
-        "option": { "map": {"html": "nunjucks" }}
-    },
-});
-
-```
-
-## 编写viewctrl.js
+注意：如果不配置upload选项，会报错的。
+ 
+## 编写uploadctrl.js
 
 ```
 'use strict';
 
-const ViewController = require('slet').ViewController
+const UploadController = require('slet').UploadController
 
-module.exports = class MyViewController extends ViewController {
+module.exports = class MyUploadController extends UploadController {
   constructor(app, ctx, next) {
     super(app, ctx, next)
+    
+    this.post_filter = [this.upload.single('avatar')]
   }
   
-  get() { 
-    let a = this.query.a
-    // this.renderType='view'
+  post() { 
     return {
-      tpl: 'index',
-      data: {
-        title: 'ssddssdd a= '+a
-      }
+      msg: 'this is a upload'
     }
   } 
 }
-
 ```
 
-## 创建index.html
+这里使用了post_filter拦截器，具体参加文档。
 
-```
-<h1>{{title}}</h1>
-```
+这里使用的单一文件，更多方法参见
 
-如果不熟悉nunjucks模板引擎，请查看https://mozilla.github.io/nunjucks/
+- https://github.com/expressjs/multer
+- https://github.com/koa-modules/multer
 
 ## 启动server
 
@@ -86,4 +69,7 @@ $ node app.js
 
 ## 查验结果
 
-在浏览器中打开 http://127.0.0.1:3000/?a=2
+打开postman
+
+![Postman](postman.png)
+
