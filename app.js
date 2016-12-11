@@ -7,8 +7,9 @@ const app = new Slet({
     // upload: { dest: './uploads/'}
 });
 
-app.defineController(require('slet-uploadcontroller'))
+// slet@1.0.8之后可选，会自动注入依赖
+// app.defineController(require('slet-uploadcontroller'))
 
-app.router('/', require('./uploadctrl') )  
+app.router('/', ('./uploadctrl') )  
 
 app.start(3000) 
