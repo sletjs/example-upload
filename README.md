@@ -18,7 +18,7 @@ const Slet = require('slet');
 const app = new Slet({
     root: __dirname,
     debug: true,
-    upload: { dest: './uploads/'}
+    //upload: { dest: './uploads/'}
 });
 
 app.defineController(require('slet-uploadcontroller'))
@@ -28,7 +28,7 @@ app.router('/', require('./uploadctrl') )
 app.start(3000) 
 ```
 
-注意：如果不配置upload选项，会报错的。
+注意：如果想配置upload选项，可以使用multer的upload: { dest: './uploads/'}。
  
 ## 编写uploadctrl.js
 
