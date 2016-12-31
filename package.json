@@ -19,7 +19,7 @@
   },
   "homepage": "https://github.com/sletjs/gettingstart#readme",
   "dependencies": {
-    "slet": "^1.0.8",
+    "slet": "^1.4.4",
     "slet-uploadcontroller": "^1.0.5"
   }
 }
